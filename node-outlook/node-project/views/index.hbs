@@ -1,0 +1,134 @@
+{{#if user}}
+	<div style="width: 50%;" class="center">
+		<div id="main" class="center reminder">
+			<div class="container-fluid">
+				<h3 class="top-space" style="text-align: center;">Reminders</h3>
+				<form method="POST" action="/calendar">
+					
+					<!------------------------>
+					<!-- Reminders Text Box -->
+					<!------------------------>
+					<div class="container-fluid">
+						<textarea class="form-control" style="width: 100%;" name="txtBx_reminders" rows="5"></textarea>
+					</div>
+
+					<div class="center">
+						<!------------------------------------>
+						<!-- Upload Button and Upload Label -->
+						<!------------------------------------>
+						<div class="container-fluid top-space left">
+							<input type="file" name="file_reminders"/>
+						</div>
+
+						<!-------------------------------->
+						<!-- Day Toggles and Time Boxes -->
+						<!-------------------------------->
+						<div style="width: 100%; padding-left: 0px;" class="left container-fluid">
+							<div class="container-fluid top-space left" style="margin-top: 20px;">
+								<div id="mon">
+									<input type="checkbox" name="chk_mon" style="display: inline-table;"/>
+									<p style="display: inline-table; margin-right: 5%;">Mon</p>
+									<input type="number" name="num_mon_hour" value="15" min="0" max="23" style="width: 15%; margin-left: 3px;"/> :
+									<input type="number" name="num_mon_min" value="30" min="0" max="59" style="width: 15%;"/>
+									<input type="number" name="num_mon_rep" value="0" min="-1" style="width: 11%; display: inline-table; margin-left: 10%;"/> Repeat
+								</div>
+
+								<div id="tues">
+									<input type="checkbox" name="chk_tues" style="display: inline-table;"/>
+									<p style="display: inline-table; margin-right: 5%;">Tues</p>
+									<input type="number" name="num_tues_hour" value="15" min="0" max="23" style="width: 15%;"/> :
+									<input type="number" name="num_tues_min" value="30" min="0" max="59" style="width: 15%;"/>
+									<input type="number" name="num_tues_rep" value="0" min="-1" style="width: 11%; display: inline-table; margin-left: 10%;"/> Repeat
+								</div>
+
+								<div id="wed">
+									<input type="checkbox" name="chk_wed" style="display: inline-table;"/>
+									<p style="display: inline-table; margin-right: 5%;">Wed</p>
+									<input type="number" name="num_wed_hour" value="15" min="0" max="23" style="width: 15%; margin-left: 2px;"/> :
+									<input type="number" name="num_wed_min" value="30" min="0" max="59" style="width: 15%;"/>
+									<input type="number" name="num_wed_rep" value="0" min="-1" style="width: 11%; display: inline-table; margin-left: 10%;"/> Repeat
+								</div>
+
+								<div id="thurs">
+									<input type="checkbox" name="chk_thurs" style="display: inline-table;"/>
+									<p style="display: inline-table; margin-right: 5%;">Thur</p>
+									<input type="number" name="num_thurs_hour" value="15" min="0" max="23" style="width: 15%; margin-left: 1px;"/> :
+									<input type="number" name="num_thurs_min" value="30" min="0" max="59" style="width: 15%;"/>
+									<input type="number" name="num_thurs_rep" value="0" min="-1" style="width: 11%; display: inline-table; margin-left: 10%;"/> Repeat
+								</div>
+
+								<div id="fri">
+									<input type="checkbox" name="chk_fri" style="display: inline-table;"/>
+									<p style="display: inline-table; margin-right: 5%;">Fri</p>
+									<input type="number" name="num_fri_hour" value="15" min="0" max="23" style="width: 15%; margin-left: 16px;"/> :
+									<input type="number" name="num_fri_min" value="30" min="0" max="59" style="width: 15%;"/>
+									<input type="number" name="num_fri_rep" value="0" min="-1" style="width: 11%; display: inline-table; margin-left: 10%;"/> Repeat
+								</div>
+
+								<div id="sat">
+									<input type="checkbox" name="chk_sat" style="display: inline-table;"/>
+									<p style="display: inline-table; margin-right: 5%;">Sat</p>
+									<input type="number" name="num_sat_hour" value="15" min="0" max="23" style="width: 15%; margin-left: 11px;"/> :
+									<input type="number" name="num_sat_min" value="30" min="0" max="59" style="width: 15%;"/>
+									<input type="number" name="num_sat_rep" value="0" min="-1" style="width: 11%; display: inline-table; margin-left: 10%;"/> Repeat
+								</div>
+
+								<div id="sun">
+									<input type="checkbox" name="chk_sun" style="display: inline-table;"/>
+									<p style="display: inline-table; margin-right: 5%;">Sun</p>
+									<input type="number" name="num_sun_hour" value="15" min="0" max="23" style="width: 15%; margin-left: 7px;"/> :
+									<input type="number" name="num_sun_min" value="30" min="0" max="59" style="width: 15%;"/>
+									<input type="number" name="num_sun_rep" value="0" min="-1" style="width: 11%; display: inline-table; margin-left: 10%;"/> Repeat
+								</div>
+
+								<div style="margin-top: 10px;">
+									<button class="btn btn-primary">Set Reminders</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{{else}}
+	<div class="jumbotron">
+    	<a class="btn btn-primary btn-large" href="{{signInUrl}}">Click here to login</a>
+    </div>
+{{/if}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
