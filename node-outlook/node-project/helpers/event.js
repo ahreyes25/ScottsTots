@@ -2,7 +2,8 @@
 	[ ] Repeat
 	[ ] Database Integration
 	[ ] Delete Events
-	[ ] Leap Year 
+	[ ] Leap Year
+	[ ] Reset API and BD Private Keys 
 */
 
 var dayNum = { SUN: 0, MON: 1, TUES: 2, WED: 3, THURS: 4, FRI: 5, SAT: 6 };
@@ -25,26 +26,38 @@ var calendarEvents = [];
 function calendarData(req) {
 	var reminders = req.body.txtBx_reminders.split("\n");
 
-	// Get reminders
-	var index = randomIndex(reminders);
-	if (index > -1) {
+	// Monday Data
+	if (req.body.chk_mon == 'on') {
 
-	  	var reminder = reminders.splice(index, 1);
-	  	var subject = reminder[0];
-	  	var body = reminder[0];
-	  	usedReminders.push(reminder);
+		// Get reminders
+		var index = randomIndex(reminders);
+		if (index > -1) {
 
-		// Monday Data
-		if (req.body.chk_mon == 'on') {
+	  		var reminder = reminders.splice(index, 1);
+	  		var subject = reminder[0];
+	  		var body = reminder[0];
+	  		usedReminders.push(reminder);
+
 			calendarEvents.push(
 				createEvent(dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min, subject, body)
 			);
 		}
+	}
 
-		// Tuesday Data
-		if (req.body.chk_tues == 'on') {
+	// Tuesday Data
+	if (req.body.chk_mon == 'on') {
+
+		// Get reminders
+		var index = randomIndex(reminders);
+		if (index > -1) {
+
+	  		var reminder = reminders.splice(index, 1);
+	  		var subject = reminder[0];
+	  		var body = reminder[0];
+	  		usedReminders.push(reminder);
+
 			calendarEvents.push(
-				createEvent(dayNum.TUES, req.body.num_tues_hour, req.body.num_tues_min, subject, body)
+				createEvent(dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min, subject, body)
 			);
 		}
 	}

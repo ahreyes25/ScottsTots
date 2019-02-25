@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 var authHelper = require('../helpers/auth');
 var graph = require('@microsoft/microsoft-graph-client');
-var main = require('../helpers/main');
+var event = require('../helpers/event');
 
 // Create Calendar Event
 router.post('/', async function(req, res) {
 
 	// Create Calendar Data from User Form
-	var calendarEvents = main.calendarData(req);
+	var calendarEvents = event.calendarData(req);
 
 	const accessToken = await authHelper.getAccessToken(req.cookies, res);
 	const userName = req.cookies.graph_user_name;
