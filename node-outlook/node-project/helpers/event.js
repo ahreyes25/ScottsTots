@@ -21,111 +21,118 @@ var leapYear = false;
 
 var usedReminders = [];
 var calendarEvents = [];
+var unusedReminders = [];
 
 // Take in POST request and create calender events for each day
 function calendarData(req) {
-	var reminders = req.body.txtBx_reminders.split("\n");
+	// Make sure reminders box is not empty
+	if (req.body.txtBx_reminders != "") {
 
-	// Monday Data
-	if (req.body.chk_mon == 'on') {
+		var reminders = req.body.txtBx_reminders.split("\n");
+		unusedReminders = reminders;
 
-		// Get reminders
-		var index = randomIndex(reminders);
-		if (index > -1) {
-
-	  		var reminder = reminders.splice(index, 1);
-	  		var subject = reminder[0];
-	  		var body = reminder[0];
-	  		usedReminders.push(reminder);
-
-			calendarEvents.push(
-				createEvent(dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min, subject, body)
-			);
+		// Monday Data
+		if (req.body.chk_mon == 'on') {
+			if (unusedReminders.length > 0) {
+				calendarEvents.push(
+					createEvent(unusedReminders, dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min)
+				);
+			}
 		}
-	}
 
-	// Tuesday Data
-	if (req.body.chk_mon == 'on') {
-
-		// Get reminders
-		var index = randomIndex(reminders);
-		if (index > -1) {
-
-	  		var reminder = reminders.splice(index, 1);
-	  		var subject = reminder[0];
-	  		var body = reminder[0];
-	  		usedReminders.push(reminder);
-
-			calendarEvents.push(
-				createEvent(dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min, subject, body)
-			);
+		// Tuesday Data
+		if (req.body.chk_tues == 'on') {
+			if (unusedReminders.length > 0) {
+				calendarEvents.push(
+					createEvent(unusedReminders, dayNum.TUES, req.body.num_tues_hour, req.body.num_tues_min)
+				);
+			}
 		}
+		return calendarEvents;
 	}
-	return calendarEvents;
+	else {
+		unusedReminders = [];
+		usedReminders = [];
+		calendarEvents = [];
+	}
+	return [];
 }
 exports.calendarData = calendarData;
 
 
 
-function createEvent(dayNum, startHour, startMin, subject, body) {
+function createEvent(reminders, dayNum, startHour, startMin) {
 
-	// Get new day of the week
-	var dayDif = ((dayNum + 7) - currentDayOfWeek) % 7;
-	if (currentDayOfWeek + dayDif > 6)
-		var newDay = currentDayOfWeek + dayDif - 7;
-	else
-		var newDay = currentDayOfWeek + dayDif;
+	// Get reminders
+	if (reminders.length > 0) {
 
-	// Get month length from array
-	if (!leapYear)
-		var monthLen = monthLength[currentMonth - 1];
-	else
-		var monthLen = monthLength_ly[currentMonth - 1];
+		var index = randomIndex(reminders);
+		if (index > -1) {
 
-	// Store starting values
-	var startDay = currentDayOfMonth + dayDif;
-	var startMonth = currentMonth;
-	var startYear = currentYear;
+	  		var reminder = reminders.splice(index, 1);
+	  		var subject = reminder[0];
+	  		var body = reminder[0];
+	  		usedReminders.push(reminder);
 
-	// Update starting values by checking for day/month/year wraps
-	// Wrap day around month
-	if (currentDayOfMonth + dayDif > monthLen) {
-		startDay = currentDayOfMonth + dayDif - monthLen;
-		startMonth++;
+			// Get new day of the week
+			var dayDif = ((dayNum + 7) - currentDayOfWeek) % 7;
+			if (currentDayOfWeek + dayDif > 6)
+				var newDay = currentDayOfWeek + dayDif - 7;
+			else
+				var newDay = currentDayOfWeek + dayDif;
 
-		// Wrap month around year
-		if (startMonth > 12) {
-			startMonth = 1;
-			startYear++;
+			// Get month length from array
+			if (!leapYear)
+				var monthLen = monthLength[currentMonth - 1];
+			else
+				var monthLen = monthLength_ly[currentMonth - 1];
+
+			// Store starting values
+			var startDay = currentDayOfMonth + dayDif;
+			var startMonth = currentMonth;
+			var startYear = currentYear;
+
+			// Update starting values by checking for day/month/year wraps
+			// Wrap day around month
+			if (currentDayOfMonth + dayDif > monthLen) {
+				startDay = currentDayOfMonth + dayDif - monthLen;
+				startMonth++;
+
+				// Wrap month around year
+				if (startMonth > 12) {
+					startMonth = 1;
+					startYear++;
+				}
+			}
+
+			// Add 0 to beginning of date elements
+			if (startDay < 10)
+				startDay = '0' + startDay;
+			if (startMonth < 10)
+				startMonth = '0' + startMonth;
+
+			// Create Start Time Var
+			var startTime = startYear + "-" + startMonth + "-" + startDay + "T" + startHour + ":" + startMin + ":00";
+			var endTime = startYear + "-" + startMonth + "-" + startDay + "T" + startHour + ":" + startMin + ":00";
+
+			var event = {
+				"subject": subject,
+			    "body": {
+			        "contentType": "HTML",
+			        "content": body
+			    },
+			    "start": {
+			        "dateTime": startTime,
+			        "timeZone": timeZone
+			    },
+			    "end": {
+			        "dateTime": endTime,
+			        "timeZone": timeZone
+			    }
+			};
+			return event;
 		}
 	}
-
-	// Add 0 to beginning of date elements
-	if (startDay < 10)
-		startDay = '0' + startDay;
-	if (startMonth < 10)
-		startMonth = '0' + startMonth;
-
-	// Create Start Time Var
-	var startTime = startYear + "-" + startMonth + "-" + startDay + "T" + startHour + ":" + startMin + ":00";
-	var endTime = startYear + "-" + startMonth + "-" + startDay + "T" + startHour + ":" + startMin + ":00";
-
-	var event = {
-		"subject": subject,
-	    "body": {
-	        "contentType": "HTML",
-	        "content": body
-	    },
-	    "start": {
-	        "dateTime": startTime,
-	        "timeZone": timeZone
-	    },
-	    "end": {
-	        "dateTime": endTime,
-	        "timeZone": timeZone
-	    }
-	};
-	return event;
 }
 
 function randomElement(array) {
