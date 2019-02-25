@@ -1,9 +1,14 @@
 /*	--- TO DO ---
+	[ ] Free & Private Time
+	[ ] Set Reminder Time to Event Time
 	[ ] Repeat
 	[ ] Database Integration
 	[ ] Delete Events
 	[ ] Leap Year
-	[ ] Reset API and BD Private Keys 
+	[ ] Reset API and BD Private Keys
+	[ ] Google Calendar Implementation
+	[ ] iOS Calendar Implementation
+	[ ] Android Calendar Implementation
 */
 
 var dayNum = { SUN: 0, MON: 1, TUES: 2, WED: 3, THURS: 4, FRI: 5, SAT: 6 };
@@ -32,22 +37,40 @@ function calendarData(req) {
 		unusedReminders = reminders;
 
 		// Monday Data
-		if (req.body.chk_mon == 'on') {
-			if (unusedReminders.length > 0) {
-				calendarEvents.push(
-					createEvent(unusedReminders, dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min)
-				);
-			}
-		}
-
+		if (req.body.chk_mon == 'on')
+			if (unusedReminders.length > 0)
+				calendarEvents.push(createEvent(unusedReminders, dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min));
+		
 		// Tuesday Data
-		if (req.body.chk_tues == 'on') {
-			if (unusedReminders.length > 0) {
-				calendarEvents.push(
-					createEvent(unusedReminders, dayNum.TUES, req.body.num_tues_hour, req.body.num_tues_min)
-				);
-			}
-		}
+		if (req.body.chk_tues == 'on')
+			if (unusedReminders.length > 0)
+				calendarEvents.push(createEvent(unusedReminders, dayNum.TUES, req.body.num_tues_hour, req.body.num_tues_min));
+		
+		// Wednesday Data
+		if (req.body.chk_wed == 'on')
+			if (unusedReminders.length > 0)
+				calendarEvents.push(createEvent(unusedReminders, dayNum.WED, req.body.num_wed_hour, req.body.num_wed_min));
+
+		// Thursday Data
+		if (req.body.chk_thurs == 'on')
+			if (unusedReminders.length > 0)
+				calendarEvents.push(createEvent(unusedReminders, dayNum.THURS, req.body.num_thurs_hour, req.body.num_thurs_min));
+
+		// Friday Data
+		if (req.body.chk_fri == 'on')
+			if (unusedReminders.length > 0)
+				calendarEvents.push(createEvent(unusedReminders, dayNum.FRI, req.body.num_fri_hour, req.body.num_fri_min));
+
+		// Saturday Data
+		if (req.body.chk_sat == 'on')
+			if (unusedReminders.length > 0)
+				calendarEvents.push(createEvent(unusedReminders, dayNum.SAT, req.body.num_sat_hour, req.body.num_sat_min));
+
+		// Sunday Data
+		if (req.body.chk_sun == 'on')
+			if (unusedReminders.length > 0)
+				calendarEvents.push(createEvent(unusedReminders, dayNum.SUN, req.body.num_sun_hour, req.body.num_sun_min));
+
 		return calendarEvents;
 	}
 	else {
@@ -110,6 +133,8 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 				startDay = '0' + startDay;
 			if (startMonth < 10)
 				startMonth = '0' + startMonth;
+			if (startHour < 10)
+				startHour = '0' + startHour;
 
 			// Create Start Time Var
 			var startTime = startYear + "-" + startMonth + "-" + startDay + "T" + startHour + ":" + startMin + ":00";
@@ -128,7 +153,10 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 			    "end": {
 			        "dateTime": endTime,
 			        "timeZone": timeZone
-			    }
+			    }// ,
+			    //"reminder": {
+
+			    //}
 			};
 			return event;
 		}

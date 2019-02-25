@@ -25,20 +25,20 @@ router.post('/', async function(req, res) {
 
 		try {
 			for (var i = 0; i < calendarEvents.length; i++) {
-				// Iterate through each calendar event
+
+				// Outlook Calendar
 				var calendarEvent = calendarEvents[i];
 				
-				const result = await client 
+				const result = await client
 				.api('/me/events')
 				.post(calendarEvent);
 			}
 			res.redirect('/');
-		}
-		catch (err) {
+			
+		} catch (err) {
 			console.log(err);
 		}
-	}
-	else {
+	} else {
 		res.redirect('/');
 	}
 });
