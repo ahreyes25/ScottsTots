@@ -1,11 +1,12 @@
 /*	--- TO DO ---
 	[ ] Free & Private Time
-	[ ] Set Reminder Time to Event Time
+	[ ] Leap Year
 	[ ] Repeat
+
 	[ ] Database Integration
 	[ ] Delete Events
-	[ ] Leap Year
 	[ ] Reset API and BD Private Keys
+
 	[ ] Google Calendar Implementation
 	[ ] iOS Calendar Implementation
 	[ ] Android Calendar Implementation
@@ -153,10 +154,9 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 			    "end": {
 			        "dateTime": endTime,
 			        "timeZone": timeZone
-			    }// ,
-			    //"reminder": {
-
-			    //}
+			    },
+			    "reminderMinutesBeforeStart": 0,
+			    "isReminderOn": true,
 			};
 			return event;
 		}
