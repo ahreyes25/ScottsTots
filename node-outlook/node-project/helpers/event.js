@@ -1,7 +1,7 @@
 /*	--- TO DO ---
-	[ ] Free & Private Time
 	[ ] Leap Year
-	[ ] Repeat
+	[ ] Recurrance
+	[ ] Add Body Keyword for Easy Mas-deletion
 
 	[ ] Database Integration
 	[ ] Delete Events
@@ -157,6 +157,8 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 			    },
 			    "reminderMinutesBeforeStart": 0,
 			    "isReminderOn": true,
+			    "showAs": "free",
+			    "sensitivity": "private",
 			};
 			return event;
 		}
