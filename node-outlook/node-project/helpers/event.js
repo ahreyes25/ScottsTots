@@ -1,12 +1,12 @@
 /*	--- TO DO ---
 	[ ] Leap Year
-	[ ] Recurrance
+	[ ] Recurrance (Redesign UI)
+	[ ] File Upload Support
 	[ ] Add Body Keyword for Easy Mas-deletion
-
-	[ ] Database Integration
 	[ ] Delete Events
+	[ ] View & Modify Reminders Page
+	[ ] Database Integration
 	[ ] Reset API and BD Private Keys
-
 	[ ] Google Calendar Implementation
 	[ ] iOS Calendar Implementation
 	[ ] Android Calendar Implementation
@@ -106,7 +106,7 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 				var newDay = currentDayOfWeek + dayDif;
 
 			// Get month length from array
-			if (!leapYear)
+			if (!leapYear())
 				var monthLen = monthLength[currentMonth - 1];
 			else
 				var monthLen = monthLength_ly[currentMonth - 1];
@@ -163,6 +163,16 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 			return event;
 		}
 	}
+}
+
+function leapYear() {
+	if (currentYear % 4 == 0)
+		if (currentYear % 100 == 0)
+			if (currentYear % 400 == 0)
+				return true;
+		else 
+			return true;
+	return false;
 }
 
 function randomElement(array) {
