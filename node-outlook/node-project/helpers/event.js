@@ -1,7 +1,7 @@
 /*	--- TO DO ---
-	[ ] Leap Year
-	[ ] Recurrance (Redesign UI)
 	[ ] File Upload Support
+	[ ] Preference TextBox Over File Upload
+	[ ] Recurrance (Redesign UI)
 	[ ] Add Body Keyword for Easy Mas-deletion
 	[ ] Delete Events
 	[ ] View & Modify Reminders Page
@@ -11,6 +11,8 @@
 	[ ] iOS Calendar Implementation
 	[ ] Android Calendar Implementation
 */
+
+var fs = require('fs');
 
 var dayNum = { SUN: 0, MON: 1, TUES: 2, WED: 3, THURS: 4, FRI: 5, SAT: 6 };
 var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
@@ -24,6 +26,7 @@ var currentYear = currentDate.getFullYear();
 var currentTime	= currentDate.toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric" }) + ':00';
 var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 var leapYear = false;
+var textFile = false;
 
 var usedReminders = [];
 var calendarEvents = [];
@@ -31,10 +34,44 @@ var unusedReminders = [];
 
 // Take in POST request and create calender events for each day
 function calendarData(req) {
-	// Make sure reminders box is not empty
-	if (req.body.txtBx_reminders != "") {
 
-		var reminders = req.body.txtBx_reminders.split("\n");
+	// Check if File exists & delete it
+	if (fs.existsSync('./public/reminders.txt')) {
+		fs.unlinkSync('./public/reminders.txt');
+		textFile = false;
+	}
+
+	// Read Upload File From Request
+	if (req.files != undefined) {
+		
+		var file = req.files.file_reminders;
+		if (file != undefined) {
+
+			// Move file into public dir
+			var filename = file.name;
+			file.mv('./public/reminders.txt');
+			textFile = true;
+		}
+	}
+
+	// Make sure reminders box is not empty
+	if (req.body.txtBx_reminders != "" || textFile == true) {
+
+		var reminders;
+		if (!textFile)
+			reminders = req.body.txtBx_reminders.split("\n");
+		else {
+			if (fs.existsSync('./public/reminders.txt')) {
+			
+				// Read contents from file in public dir
+				fs.readFile('./public/reminders.txt', {encoding: 'utf-8'}, function(err, data){
+					reminders = data.split("\n");
+					console.log("inside: " + reminders);
+				});
+			}
+		}
+
+		console.log("outside: " + reminders);
 		unusedReminders = reminders;
 
 		// Monday Data
@@ -166,6 +203,7 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 }
 
 function leapYear() {
+
 	if (currentYear % 4 == 0)
 		if (currentYear % 100 == 0)
 			if (currentYear % 400 == 0)

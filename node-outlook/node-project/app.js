@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var upload = require('express-fileupload'); // read in files from input form
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(upload());
 
 app.use('/', indexRouter);
 app.use('/authorize', authorize);
