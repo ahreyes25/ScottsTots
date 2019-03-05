@@ -1,6 +1,5 @@
 /*	--- TO DO ---
 	[ ] File Upload Support
-	[ ] Preference TextBox Over File Upload
 	[ ] Recurrance (Redesign UI)
 	[ ] Add Body Keyword for Easy Mas-deletion
 	[ ] Delete Events
@@ -57,21 +56,20 @@ function calendarData(req) {
 	// Make sure reminders box is not empty
 	if (req.body.txtBx_reminders != "" || textFile == true) {
 
-		var reminders;
-		if (!textFile)
-			reminders = req.body.txtBx_reminders.split("\n");
+		if (!textFile) {
+			var reminders = req.body.txtBx_reminders.split("\n");
+			processFile(reminders);
+		}
 		else {
 			if (fs.existsSync('./public/reminders.txt')) {
 			
 				// Read contents from file in public dir
 				fs.readFile('./public/reminders.txt', {encoding: 'utf-8'}, function(err, data){
-					reminders = data.split("\n");
-					console.log("inside: " + reminders);
+					reminders = data;
+					processFile(reminders);
 				});
 			}
 		}
-
-		console.log("outside: " + reminders);
 		unusedReminders = reminders;
 
 		// Monday Data
@@ -120,7 +118,9 @@ function calendarData(req) {
 }
 exports.calendarData = calendarData;
 
-
+function processFile(reminders) {
+	console.log("processFile: " + reminders);
+}
 
 function createEvent(reminders, dayNum, startHour, startMin) {
 
