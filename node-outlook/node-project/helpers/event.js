@@ -53,63 +53,31 @@ function calendarData(req) {
 		}
 	}
 
+	var reminders;
 	// Make sure reminders box is not empty
 	if (req.body.txtBx_reminders != "" || textFile == true) {
 
 		if (!textFile) {
-			var reminders = req.body.txtBx_reminders.split("\n");
-			processFile(reminders);
+			reminders = req.body.txtBx_reminders;//.split("\n");
+			return processFile(req, reminders);
 		}
 		else {
 			if (fs.existsSync('./public/reminders.txt')) {
 			
 				// Read contents from file in public dir
-				fs.readFile('./public/reminders.txt', {encoding: 'utf-8'}, function(err, data){
-					reminders = data;
-					processFile(reminders);
+				fs.readFile('./public/reminders.txt', {encoding: 'utf-8'}, function(err, data) {
+					return processFile(req, data);
 				});
 			}
 		}
-		unusedReminders = reminders;
-
-		// Monday Data
-		if (req.body.chk_mon == 'on')
-			if (unusedReminders.length > 0)
-				calendarEvents.push(createEvent(unusedReminders, dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min));
-		
-		// Tuesday Data
-		if (req.body.chk_tues == 'on')
-			if (unusedReminders.length > 0)
-				calendarEvents.push(createEvent(unusedReminders, dayNum.TUES, req.body.num_tues_hour, req.body.num_tues_min));
-		
-		// Wednesday Data
-		if (req.body.chk_wed == 'on')
-			if (unusedReminders.length > 0)
-				calendarEvents.push(createEvent(unusedReminders, dayNum.WED, req.body.num_wed_hour, req.body.num_wed_min));
-
-		// Thursday Data
-		if (req.body.chk_thurs == 'on')
-			if (unusedReminders.length > 0)
-				calendarEvents.push(createEvent(unusedReminders, dayNum.THURS, req.body.num_thurs_hour, req.body.num_thurs_min));
-
-		// Friday Data
-		if (req.body.chk_fri == 'on')
-			if (unusedReminders.length > 0)
-				calendarEvents.push(createEvent(unusedReminders, dayNum.FRI, req.body.num_fri_hour, req.body.num_fri_min));
-
-		// Saturday Data
-		if (req.body.chk_sat == 'on')
-			if (unusedReminders.length > 0)
-				calendarEvents.push(createEvent(unusedReminders, dayNum.SAT, req.body.num_sat_hour, req.body.num_sat_min));
-
-		// Sunday Data
-		if (req.body.chk_sun == 'on')
-			if (unusedReminders.length > 0)
-				calendarEvents.push(createEvent(unusedReminders, dayNum.SUN, req.body.num_sun_hour, req.body.num_sun_min));
-
-		return calendarEvents;
 	}
 	else {
+
+		/*
+			THIS IS GETTING RETURNED BECAUSE THE
+			FILE IS TAKING A LONG TIME TO PROCESS
+		*/
+
 		unusedReminders = [];
 		usedReminders = [];
 		calendarEvents = [];
@@ -118,8 +86,41 @@ function calendarData(req) {
 }
 exports.calendarData = calendarData;
 
-function processFile(reminders) {
-	console.log("processFile: " + reminders);
+function processFile(req, reminders) {
+	
+	unusedReminders = reminders.split("\n");
+
+	// Monday Data
+	if (req.body.chk_mon == 'on')
+		if (unusedReminders.length > 0)
+			calendarEvents.push(createEvent(unusedReminders, dayNum.MON, req.body.num_mon_hour, req.body.num_mon_min));
+	// Tuesday Data
+	if (req.body.chk_tues == 'on')
+		if (unusedReminders.length > 0)
+			calendarEvents.push(createEvent(unusedReminders, dayNum.TUES, req.body.num_tues_hour, req.body.num_tues_min));
+	// Wednesday Data
+	if (req.body.chk_wed == 'on')
+		if (unusedReminders.length > 0)
+			calendarEvents.push(createEvent(unusedReminders, dayNum.WED, req.body.num_wed_hour, req.body.num_wed_min));
+	// Thursday Data
+	if (req.body.chk_thurs == 'on')
+		if (unusedReminders.length > 0)
+			calendarEvents.push(createEvent(unusedReminders, dayNum.THURS, req.body.num_thurs_hour, req.body.num_thurs_min));
+	// Friday Data
+	if (req.body.chk_fri == 'on')
+		if (unusedReminders.length > 0)
+			calendarEvents.push(createEvent(unusedReminders, dayNum.FRI, req.body.num_fri_hour, req.body.num_fri_min));
+	// Saturday Data
+	if (req.body.chk_sat == 'on')
+		if (unusedReminders.length > 0)
+			calendarEvents.push(createEvent(unusedReminders, dayNum.SAT, req.body.num_sat_hour, req.body.num_sat_min));
+	// Sunday Data
+	if (req.body.chk_sun == 'on')
+		if (unusedReminders.length > 0)
+			calendarEvents.push(createEvent(unusedReminders, dayNum.SUN, req.body.num_sun_hour, req.body.num_sun_min));
+
+	console.log("calendarEvents: " + calendarEvents);
+	return calendarEvents;
 }
 
 function createEvent(reminders, dayNum, startHour, startMin) {
@@ -131,6 +132,7 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 		if (index > -1) {
 
 	  		var reminder = reminders.splice(index, 1);
+	  		console.log("reminder: " + reminder);
 	  		var subject = reminder[0];
 	  		var body = reminder[0];
 	  		usedReminders.push(reminder);
@@ -143,7 +145,7 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 				var newDay = currentDayOfWeek + dayDif;
 
 			// Get month length from array
-			if (!leapYear())
+			if (!isLeapYear())
 				var monthLen = monthLength[currentMonth - 1];
 			else
 				var monthLen = monthLength_ly[currentMonth - 1];
@@ -197,12 +199,13 @@ function createEvent(reminders, dayNum, startHour, startMin) {
 			    "showAs": "free",
 			    "sensitivity": "private",
 			};
+			console.log("event: " + JSON.stringify(event));
 			return event;
 		}
 	}
 }
 
-function leapYear() {
+function isLeapYear() {
 
 	if (currentYear % 4 == 0)
 		if (currentYear % 100 == 0)
