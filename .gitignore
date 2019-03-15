@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/RemindMeAlready/RemindMeAlready/RemindMeAlready/bin/Debug/netstandard2.0
+/RemindMeAlready/RemindMeAlready/RemindMeAlready/obj
+/RemindMeAlready/RemindMeAlready/RemindMeAlready.Android/bin/Debug
+/RemindMeAlready/RemindMeAlready/RemindMeAlready.Android/obj
+/RemindMeAlready/RemindMeAlready/RemindMeAlready.iOS/bin/iPhoneSimulator/Debug
+/RemindMeAlready/RemindMeAlready/RemindMeAlready.iOS/obj
+/RemindMeAlready/RemindMeAlready/RemindMeAlready.UWP/bin/x86/Debug
+/RemindMeAlready/RemindMeAlready/RemindMeAlready.UWP/obj
+/.vs
+/RemindMeAlready/.vs/RemindMeAlready/v15

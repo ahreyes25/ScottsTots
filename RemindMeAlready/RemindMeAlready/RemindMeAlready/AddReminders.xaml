@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RemindMeAlready.AddReminders">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS">0,20,0,0</On>
+        </OnPlatform>
+    </ContentPage.Padding>
+    <Grid Padding="5,0" RowSpacing="1" ColumnSpacing="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height=".5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Editor x:Name="addReminder" VerticalOptions="Start" Placeholder="Add Reminder..." Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Button x:Name="AddReminderBtn" Clicked="OnAddClicked" VerticalOptions="Start" Text="Add Reminder" Grid.Row="0" Grid.Column="3"/>
+        <Button x:Name="uploadBtn" VerticalOptions="Start" Text="Upload File" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label x:Name="statusMessage" VerticalOptions="Start" TextColor="OrangeRed" FontSize="Large" Grid.ColumnSpan="4" Grid.Row="2" />
+    </Grid>
+    
+</ContentPage>

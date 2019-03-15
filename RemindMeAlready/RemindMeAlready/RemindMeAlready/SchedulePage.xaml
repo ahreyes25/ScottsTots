@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RemindMeAlready.SchedulePage">
+    <!--<Grid Padding="5,0" RowSpacing="1" ColumnSpacing="1" x:Name="scheduleGrid"/>-->
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="GridVisualElements" TargetType="VisualElement">
+                <Setter Property="h"
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+    <Grid Padding="5,0" RowSpacing="1" ColumnSpacing="1">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="cancelButton" Text="Cancel" BackgroundColor="Blue" TextColor="Black" Grid.Row="0" Grid.Column="0" Clicked="CancelButton_ClickedAsync"></Button>
+        <Button x:Name="saveButton" Text="Save" BackgroundColor="Blue" TextColor="Black" Grid.Row="0" Grid.Column="2" Clicked="SaveButton_ClickedAsync"></Button> 
+        <Label x:Name="switchHeader" Grid.Row="1"  Text="Remind me" Grid.Column="0" VerticalTextAlignment="Center"/>
+        <Label x:Name="dayHeader" Grid.Row="1" Text="Days" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <Label x:Name="timeHeader" Grid.Row="1" Text="Time" Grid.Column="2" VerticalTextAlignment="Center"/>
+        <Switch x:Name="mondaySwitch" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start"/>
+        <Label x:Name="mondayLabel" Text="Monday" Grid.Row="2" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <TimePicker x:Name="mondayTimePicker" Grid.Row="2" Grid.Column="2" HorizontalOptions="End"/>
+        <Switch x:Name="tuesdaySwitch" Grid.Row="3" Grid.Column="0" HorizontalOptions="Start"/>
+        <Label x:Name="tuesdayLabel" Text="Tuesday" Grid.Row="3" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <TimePicker x:Name="tuesdayTimePicker" Grid.Row="3" Grid.Column="2" HorizontalOptions="End"/>
+        <Switch x:Name="wednesdaySwitch" Grid.Row="4" Grid.Column="0" HorizontalOptions="Start"/>
+        <Label x:Name="wednesdayLabel" Text="Wednesday" Grid.Row="4" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <TimePicker x:Name="wednesdayTimePicker" Grid.Row="4" Grid.Column="2" HorizontalOptions="End"/>
+        <Switch x:Name="thursdaySwitch" Grid.Row="5" Grid.Column="0" HorizontalOptions="Start"/>
+        <Label x:Name="thursdayLabel" Text="Thursday" Grid.Row="5" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <TimePicker x:Name="thursdayTimePicker" Grid.Row="5" Grid.Column="2" HorizontalOptions="End"/>
+        <Switch x:Name="fridaySwitch" Grid.Row="6" Grid.Column="0" HorizontalOptions="Start"/>
+        <Label x:Name="fridayLabel" Text="Friday" Grid.Row="6" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <TimePicker x:Name="fridayTimePicker" Grid.Row="6" Grid.Column="2" HorizontalOptions="End"/>
+        <Switch x:Name="saturdaySwitch" Grid.Row="7" Grid.Column="0" HorizontalOptions="Start"/>
+        <Label x:Name="saturdayLabel" Text="Saturday" Grid.Row="7" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <TimePicker x:Name="saturdayTimePicker" Grid.Row="7" Grid.Column="2" HorizontalOptions="End"/>
+        <Switch x:Name="sundaySwitch" Grid.Row="8" Grid.Column="0" HorizontalOptions="Start"/>
+        <Label x:Name="sundayLabel" Text="Sunday" Grid.Row="8" Grid.Column="1" VerticalTextAlignment="Center"/>
+        <TimePicker x:Name="sundayTimePicker" Grid.Row="8" Grid.Column="2" HorizontalOptions="End"/>
+    </Grid>
+</ContentPage>

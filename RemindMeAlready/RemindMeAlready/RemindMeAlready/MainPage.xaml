@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RemindMeAlready"
+             x:Class="RemindMeAlready.MainPage" Padding="0, 20">
+
+    <StackLayout>
+        
+        <Label Text="Remind Me Already!" 
+           HorizontalOptions="CenterAndExpand"
+           VerticalOptions="Start" />
+        <Label x:Name="statusMessage" />
+        <ListView x:Name="remindersList">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="30">
+                        <StackLayout Padding="5">
+                            <Label Text="{Binding Name}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="addRemindersView" Text="Add Reminders"/>
+        <Button x:Name="gotoSchedule" Text="Schedule"/>
+        <Button x:Name="notificationButton" Text="Send Notification"/>
+    </StackLayout>
+
+</ContentPage>
